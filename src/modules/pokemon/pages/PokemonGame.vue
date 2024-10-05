@@ -13,7 +13,11 @@
         <PokemonPicture :pokemon-id="randomPokemon.id" :show-pokemon="gameStatus !== GameStatus.Playing" />
 
         <!-- Pokemon Options -->
-        <PokemonOptions :options="options" @selected-option="checkAswer" />
+        <PokemonOptions
+          :options="options"
+          :block-selection="gameStatus !== GameStatus.Playing"
+          :correct-answer="randomPokemon.id"
+          @selected-option="checkAswer" />
     </section>
 </template>
 
