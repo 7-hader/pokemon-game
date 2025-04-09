@@ -42,4 +42,38 @@ describe('<PokemonOptions />', () => {
     expect(wrapper.emitted().selectedOption[1]).toEqual([2]);
     expect(wrapper.emitted().selectedOption[2]).toEqual([3]);
   });
+
+  test('should disabled buttons when blockSelection prop is true', () => {
+    const wrapper = mount(PokemonOptions, {
+      props: { options, blockSelection: true, correctAnswer: 1 },
+    });
+
+    const buttons = wrapper.findAll('button');
+
+    buttons.forEach((button) => {
+      // expect(button.attributes('disabled')).toBeTruthy();
+      const attributes = Object.keys(button.attributes());
+      // console.log(attributes);
+      expect(attributes).toContain('disabled');
+    });
+  });
+
+  test('should apply correct styling to buttons based on correct/incorrect answer', () => {
+    const correctAnswer = 2;
+    const wrapper = mount(PokemonOptions, {
+      props: { options, blockSelection: true, correctAnswer },
+    });
+
+    const buttons = wrapper.findAll('button');
+
+    buttons.forEach((button, index) => {
+      // console.log(button.classes());
+
+      if (options[index].id === correctAnswer) {
+        expect(button.classes()).toContain('correct');
+      } else {
+        expect(button.classes()).toContain('incorrect');
+      }
+    });
+  });
 });
